@@ -19,6 +19,7 @@ import {
 import navbar from '../components/navbar/navbar.component';
 import footer from '../components/footer/footer.component';
 import main from './main/main.component';
+import main_modal from './components/main_modal/main_modal.component'
 import constants from './app.constants';
 import util from '../components/util/util.module';
 import socket from '../components/socket/socket.service';
@@ -26,7 +27,7 @@ import socket from '../components/socket/socket.service';
 import './app.css';
 
 angular.module('btsclientApp', [ngCookies, ngResource, ngSanitize, 'btford.socket-io', uiRouter,
-  uiBootstrap, navbar, footer, main, constants, socket, util
+  uiBootstrap, navbar, footer, main,main_modal,constants, socket, util
 ])
   .config(routeConfig);
 

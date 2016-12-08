@@ -14,15 +14,12 @@ module.exports = {
     || process.env.PORT
     || 8080,
 
-  sequelize: {
-    uri: process.env.SEQUELIZE_URI
-      || 'sqlite://',
-    options: {
-      logging: false,
-      storage: 'dist.sqlite',
-      define: {
-        timestamps: false
-      }
+    sequelize: {
+      database: process.env.DATABASE || 'bpmsdb',
+      username: process.env.USERNAME || 'root',
+      password: process.env.PASSWORD || 'everteam',
+      host: process.env.HOST || 'ubuntu.estebanf.com',
+      dialect: 'mysql'
+
     }
-  }
 };

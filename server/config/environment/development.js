@@ -7,17 +7,15 @@ module.exports = {
 
   // Sequelize connection opions
   sequelize: {
-    uri: 'sqlite://',
-    options: {
-      logging: false,
-      storage: 'dev.sqlite',
-      define: {
-        timestamps: false
-      }
-    }
+    database: process.env.DATABASE || 'bpmsdb',
+    username: process.env.USERNAME || 'root',
+    password: process.env.PASSWORD || 'everteam',
+    host: process.env.HOST || 'ubuntu.estebanf.com',
+    dialect: 'mysql'
+
   },
 
   // Seed database on startup
-  seedDB: true
+  seedDB: false
 
 };
