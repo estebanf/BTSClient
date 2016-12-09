@@ -22,9 +22,9 @@
             <td class="col-md-2">{{bts.status}}</td>
             <td class="col-md-4 text-center">
               <button class="btn btn-info action-button" uib-tooltip="view request {{ bts.requestid  }}" ng-click="$ctrl.edit_or_view('View',bts)">View</button>
-              <button class="btn btn-warning action-button" uib-tooltip="edit request {{ bts.requestid  }}" ng-click="$ctrl.edit_or_view('Edit',bts)">Edit</button>
-              <button class="btn btn-danger action-button" uib-tooltip="release inquiry {{ bts.requestid  }}">Release</button>
-              <button class="btn btn-success action-button" uib-tooltip="confirm inquiry {{ bts.requestid  }}">Confirm</button>
+              <button class="btn btn-warning action-button" uib-tooltip="edit request {{ bts.requestid  }}" ng-click="$ctrl.edit_or_view('Edit',bts)" ng-if="$ctrl.showEdit(bts)">Edit</button>
+              <button class="btn btn-danger action-button" uib-tooltip="release inquiry {{ bts.requestid  }}" ng-click="$ctrl.update('Release',bts)" ng-if="$ctrl.showRelease(bts)">Release</button>
+              <button class="btn btn-success action-button" uib-tooltip="confirm inquiry {{ bts.requestid  }}" ng-click="$ctrl.update('Confirm',bts)" ng-if="$ctrl.showConfirm(bts)">Confirm</button>
             </td>
           </tr>
         </tbody>

@@ -2,6 +2,30 @@
 
 var rp = require('request-promise');
 
-export buildMessage(approved,res){
-
+export function sendMessage(approved,req,res){
+  var data = {
+    "bts:Get_customer_decisionRequest":{
+      "@xmlns":{
+        "bts":"http://bts.com/Processes/Core/ContentTransmissionBooking/BTS",
+        "bts1":"http://www.example.org/BTS"
+      },
+      "bts1:RequestId":{
+        $:req.params.id
+      },
+      "bts1:approved":{
+        $:approved
+      }
+    }
+  };
+  var opt = {
+    uri:'http://ubuntu.estebanf.com:8080/everteam/ode/processes/BTS/Processes/Core/ContentTransmissionBooking/BTS/Client',
+    method:'POST',
+    headers:{
+      'Content-Type':'application/json/badgerfish'
+    },
+    body: JSON.stringify(data)
+  }
+  rp(opt).then(function(parsedBody){
+    return res.status(200).json(parsedBody);
+  });
 }

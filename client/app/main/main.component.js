@@ -9,9 +9,46 @@ export class MainController {
 
   /*@ngInject*/
   constructor($http, $scope,$uibModal,$interval) {
+    // var statuses = [
+    //   "Released",
+    //   "Modified",
+    //   "Received",
+    //   "Waiting for costs",
+    //   "Valuated",
+    //   "Waiting for approval",
+    //   "Approval received",
+    //   "Rejected",
+    //   "Booked on feeds",
+    //   "Booked on scheduleAll",
+    //   "Hold on feeds",
+    //   "Hold on scheduleAll"
+    // ]
+    this.status_release = [
+      "Hold on feeds",
+      "Hold on scheduleAll"
+    ]
+    this.status_confirm = [
+      "Hold on feeds",
+      "Hold on scheduleAll"
+    ]
+    this.status_edit = [
+      "Released",
+      "Rejected",
+      "Hold on feeds",
+      "Hold on scheduleAll"
+    ];
     this.$http = $http;
     this.$uibModal = $uibModal;
     this.$interval = $interval;
+  }
+  showEdit(obj){
+    return (this.status_edit.indexOf(obj.status) >= 0)
+  }
+  showConfirm(obj){
+    return (this.status_confirm.indexOf(obj.status) >= 0)
+  }
+  showRelease(obj){
+    return (this.status_release.indexOf(obj.status) >= 0)
   }
   findIndex(obj){
     for(var i = 0; i < this.serviceRequests.length; i++){
@@ -29,7 +66,7 @@ export class MainController {
         .then(response => {
           self.serviceRequests = response.data;
         });
-      },10000);
+      },5000);
   }
   $onInit() {
     this.$http.get('/api/bts_requests')
@@ -85,6 +122,16 @@ export class MainController {
     this.currentRequest = this.serviceRequests[index];
     this.currentIndex = index;
     this.open_modal(action);
+  }
+  update(action,obj){
+    var self = this;
+    var index = self.findIndex(obj);
+    self.$http.put('/api/bts_requests/'+ obj.requestid,{
+      action:action
+    })
+      .success(function(data){
+        self.serviceRequests[index] = data;
+      })
   }
 }
 export default angular.module('btsclientApp.main', [uiRouter])

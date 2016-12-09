@@ -72,18 +72,7 @@ export function index(req, res) {
     .catch(handleError(res));
 }
 
-// Gets a single BtsRequest from the DB
-export function show(req, res) {
-  return BtsRequest.find({
-    where: {
-      _id: req.params.id
-    }
-  })
-    .then(handleEntityNotFound(res))
-    .then(respondWithResult(res))
-    .catch(handleError(res));
-}
-function getRequest(action,obj){
+function getRequest(action,obj,_id,long_request){
   var data = {
     "bts:Receive_requestRequest":{
       "@xmlns":{
@@ -92,20 +81,22 @@ function getRequest(action,obj){
       },
       "bts1:Action":{
         $:action
-      },
-      "bts1:RequestInfo":{
-        "bts1:CustomerId":{ $: obj.customerid + ''},
-        "bts1:EventDateTime":{ $: obj.eventdatetime},
-        "bts1:EventDuration":{ $: obj.eventduration + ''},
-        "bts1:EventType":{ $: obj.eventtype},
-        "bts1:RequestType":{ $: obj.requesttype},
-        "bts1:Location":{ $: obj.location}
       }
     }
-  };
-  if(action == 'Modify'){
+  }
+  if(action != 'New'){
     data["bts:Receive_requestRequest"]["bts1:RequestId"] = {
-      $: obj.requestid
+      $: _id
+    }
+  }
+  if(long_request){
+    data["bts:Receive_requestRequest"]["bts1:RequestInfo"] = {
+      "bts1:CustomerId":{ $: obj.customerid + ''},
+      "bts1:EventDateTime":{ $: obj.eventdatetime},
+      "bts1:EventDuration":{ $: obj.eventduration + ''},
+      "bts1:EventType":{ $: obj.eventtype},
+      "bts1:RequestType":{ $: obj.requesttype},
+      "bts1:Location":{ $: obj.location}
     }
   }
   var opt = {
@@ -120,8 +111,7 @@ function getRequest(action,obj){
 }
 // Creates a new BtsRequest in the DB
 export function create(req, res) {
-  rp(getRequest('New',req.body)).then(function(parsedBody){
-    console.log(parsedBody);
+  rp(getRequest('New',req.body,0,true)).then(function(parsedBody){
     return BtsRequest.find({
       where: {
         requestid: JSON.parse(parsedBody)["Receive_requestResponse"]["BTS:RequestId"].$
@@ -132,36 +122,18 @@ export function create(req, res) {
 
 // Upserts the given BtsRequest in the DB at the specified ID
 export function upsert(req, res) {
-  rp(getRequest('Modify',req.body)).then(function(parsedBody){
-    console.log(parsedBody);
+  var opt = {};
+  if(req.body.action){
+    opt = getRequest(req.body.action,null,req.params.id,false)
+  }
+  else{
+    opt = getRequest('Modify',req.body,req.body.requestid,true)
+  }
+  rp(opt).then(function(parsedBody){
     return BtsRequest.find({
       where: {
         requestid: JSON.parse(parsedBody)["Receive_requestResponse"]["BTS:RequestId"].$
       }
     }).then(respondWithResult(res))
   })
-}
-
-// Updates an existing BtsRequest in the DB
-export function patch(req, res) {
-  rp(getRequest('Modify',req.body)).then(function(parsedBody){
-    console.log(parsedBody);
-    return BtsRequest.find({
-      where: {
-        requestid: JSON.parse(parsedBody)["Receive_requestResponse"]["BTS:RequestId"].$
-      }
-    }).then(respondWithResult(res))
-  })
-}
-
-// Deletes a BtsRequest from the DB
-export function destroy(req, res) {
-  return BtsRequest.find({
-    where: {
-      _id: req.params.id
-    }
-  })
-    .then(handleEntityNotFound(res))
-    .then(removeEntity(res))
-    .catch(handleError(res));
 }
