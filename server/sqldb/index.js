@@ -20,6 +20,5 @@ var db = {
 
 // Insert models below
 db.BtsRequest = db.sequelize.import('../api/bts_request/bts_request.model');
-db.Thing = db.sequelize.import('../api/thing/thing.model');
 
 module.exports = db;

@@ -4,6 +4,7 @@
 
 'use strict';
 
+// import express from 'express';
 import express from 'express';
 import sqldb from './sqldb';
 import config from './config/environment';
@@ -39,4 +40,4 @@ sqldb.sequelize.sync()
   });
 
 // Expose app
-exports = module.exports = app; 
+exports = module.exports = app;

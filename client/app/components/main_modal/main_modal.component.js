@@ -9,6 +9,7 @@ export class mainModalComponent {
     this.states = ["Alabama","Alaska","AmericanSamoa","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","DistrictOfColumbia","FederatedStatesOfMicronesia","Florida","Georgia","Guam","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","MarshallIslands","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","NewHampshire","NewJersey","NewMexico","NewYork","NorthCarolina","NorthDakota","NorthernMarianaIslands","Ohio","Oklahoma","Oregon","Palau","Pennsylvania","PuertoRico","RhodeIsland","SouthCarolina","SouthDakota","Tennessee","Texas","Utah","Vermont","VirginIslands","Virginia","Washington","WestVirginia","Wisconsin","Wyoming"];
 
     this.item = angular.copy(this.resolve.data.item);
+    console.log(this.item);
     this.mode = this.resolve.data.mode;
     this.req_types = ['Inquiry','Booking'];
     this.evt_types = ['News','Entertainment'];
