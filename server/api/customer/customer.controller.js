@@ -29,7 +29,7 @@ export function index(req, res) {
   var url_parts = url.parse(req.url, true);
   var query = url_parts.query;
 rp({
-  uri: (process.env.CRMHOST || 'http://ubuntu.estebanf.com:3000') + '/api/BtsCustomers?filter[where][name][like]=' + query["filter[where][name][like]"],
+  uri: (process.env.CRMHOST || 'http://ubuntu.estebanf.com:3000') + '/api/BtsCustomers?filter[where][customername][like]=' + query["filter[where][customername][like]"],
   method: 'GET',
   headers: {
     'Content-Type':'application/json'

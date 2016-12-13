@@ -23,15 +23,16 @@ export class mainModalComponent {
         .then(function(response){
           // console.log(response);
           self.item.customer =  JSON.parse(response.data);
-        })
+        }) 
     }
   };
   getCustomer(val){
     if(val && val.length >=3)
-    return this.$http.get('/api/customers?filter[where][name][like]=%'+ val + '%')
+    return this.$http.get('/api/customers?filter[where][customername][like]=%'+ val + '%')
       .then(function(response){
         return JSON.parse(response.data).map(function(item){
-          return {id: item.id, name: item.name};
+          console.log(item);
+          return {id: item.customerid, name: item.customername};
         })
       })
   }
