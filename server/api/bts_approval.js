@@ -26,6 +26,7 @@ export function sendMessage(approved,req,res){
     body: JSON.stringify(data)
   }
   rp(opt).then(function(parsedBody){
-    return res.status(200).json(parsedBody);
+    return res.redirect(304,'/approval');
   });
+
 }
