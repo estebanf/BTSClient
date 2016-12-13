@@ -100,7 +100,7 @@ function getRequest(action,obj,_id,long_request){
     }
   }
   var opt = {
-    uri:'http://ubuntu.estebanf.com:8080/everteam/ode/processes/BTS/Processes/Core/ContentTransmissionBooking/BTS/Client',
+    uri: (process.env.BPMHOST || 'http://ubuntu.estebanf.com:8080/everteam') + '/ode/processes/BTS/Processes/Core/ContentTransmissionBooking/BTS/Client',
     method:'POST',
     headers:{
       'Content-Type':'application/json/badgerfish'

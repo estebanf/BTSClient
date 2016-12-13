@@ -19,17 +19,18 @@ export class mainModalComponent {
     }
     if(this.mode != 'Create'){
       var self = this
-      this.$http.get('http://ubuntu.estebanf.com:3000/api/Customers/' + this.item.customerid)
+      this.$http.get('/api/customers/' + this.item.customerid)
         .then(function(response){
-          self.item.customer =  response.data;
+          // console.log(response);
+          self.item.customer =  JSON.parse(response.data);
         })
     }
   };
   getCustomer(val){
     if(val && val.length >=3)
-    return this.$http.get('http://ubuntu.estebanf.com:3000/api/Customers?filter[where][name][like]=%'+ val + '%')
+    return this.$http.get('/api/customers?filter[where][name][like]=%'+ val + '%')
       .then(function(response){
-        return response.data.map(function(item){
+        return JSON.parse(response.data).map(function(item){
           return {id: item.id, name: item.name};
         })
       })

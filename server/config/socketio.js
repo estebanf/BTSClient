@@ -16,6 +16,7 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
+  require('../api/customer/customer.socket').register(socket);
   require('../api/reject/reject.socket').register(socket);
   require('../api/approve/approve.socket').register(socket);
   require('../api/bts_request/bts_request.socket').register(socket);
