@@ -18,7 +18,7 @@ module.exports = {
       database: process.env.DATABASE || 'bpmsdb',
       username: process.env.USERNAME || 'root',
       password: process.env.PASSWORD || 'everteam',
-      host: process.env.HOST || 'ubuntu.estebanf.com',
+      host: process.env.DBHOST || 'ubuntu.estebanf.com',
       dialect: 'mysql'
 
     }
