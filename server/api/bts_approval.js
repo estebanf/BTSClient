@@ -26,7 +26,7 @@ export function sendMessage(approved,req,res){
     body: JSON.stringify(data)
   }
   rp(opt).then(function(parsedBody){
-    return res.redirect(304,'/approval');
+    return res.redirect(302,'/approval');
   });
 
 }
